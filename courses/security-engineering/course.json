@@ -1,0 +1,789 @@
+{
+  "slug": "security-engineering",
+  "title": "Security 101",
+  "subtitle": "A practical survey of how digital systems fail, how to reduce risk, and how to respond when controls fail.",
+  "summary": "A beginner course for building a useful map of cybersecurity. Learn the shared language and everyday decisions used across software, IT, and cloud security without pretending to train for a specialist role.",
+  "duration": "4–6 guided hours",
+  "pace": "1–2 weeks at 3–4 hours per week, or at your own pace",
+  "level": "Beginner · no security experience required",
+  "audience": "People who work with or are curious about software and computer systems: developers, IT learners, students, and career explorers.",
+  "scope": "This course builds breadth: security concepts, systems, networks, identity, common application risks, and basic response. It does not teach penetration testing, production cloud administration, incident command, or specialist certification objectives.",
+  "completion": "Complete the 12 lessons, pass each knowledge check, finish each in-course activity, and submit the final service review. Learning is free; an optional certificate fee must be disclosed before purchase.",
+  "units": [
+    {
+      "title": "1. The security mindset",
+      "description": "Build a practical vocabulary for assets, threats, controls, and risk.",
+      "lessons": [
+        {
+          "title": "What are we trying to protect?",
+          "duration": "20 min",
+          "summary": "Start with the purpose of security: protect something valuable while helping a system do its job.",
+          "notes": [
+            "Security is a set of decisions about what a system should allow, what it should resist, and how people will recover when something goes wrong. It is not a product you install once. A secure service still needs to be usable, maintained, and monitored.",
+            "The CIA model is a useful first lens. Confidentiality means information is seen only by intended people or systems. Integrity means information and behavior stay accurate and trustworthy. Availability means authorized users can use the service when they need it. One design decision can help one goal while hurting another, so teams must understand the service’s purpose.",
+            "For a file-sharing service, private documents need confidentiality, approvals need integrity, and reviewers need availability. These goals help make vague claims such as “make it secure” more concrete. Ask what could be exposed, changed, or interrupted, and whose work would be affected.",
+            "Security is also a human and organizational concern. A control that people cannot understand may be bypassed; a control with no owner may quietly stop working. Good security makes safer behavior the ordinary path and gives the team a way to notice and correct failures."
+          ],
+          "quiz": {
+            "question": "A document service prevents unauthorized users from reading private reports. Which security goal is it mainly protecting?",
+            "options": [
+              "Confidentiality",
+              "Availability",
+              "Integrity"
+            ],
+            "answer": 0,
+            "explanation": "Confidentiality limits who can see information. Availability and integrity address different risks."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Security goals map",
+            "prompt": "A clinic scheduling service stores patient details and appointment times. Choose the best match for each concern: a stranger reads the details; an attacker changes an appointment; the service is down during check-in.",
+            "options": [
+              "Confidentiality; integrity; availability",
+              "Availability; confidentiality; integrity",
+              "Integrity; availability; confidentiality"
+            ],
+            "answer": 0,
+            "explanation": "Map the harm before choosing controls: exposure affects confidentiality, unauthorized changes affect integrity, and downtime affects availability.",
+            "reflection": [
+              "Which of confidentiality, integrity, or availability matters most to the patient in this example, and why?",
+              "Describe one realistic way an appointment could be changed by mistake or abuse.",
+              "Name one signal the clinic could monitor to notice a serious failure."
+            ]
+          },
+          "resources": [
+            {
+              "kind": "reading",
+              "title": "NIST Cybersecurity Framework 2.0",
+              "provider": "NIST",
+              "url": "https://www.nist.gov/cyberframework",
+              "summary": "A practical map of security outcomes: govern, identify, protect, detect, respond, and recover. Use it to connect security work to what an organization needs to protect."
+            },
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "A short official NIST animation introducing the CSF 2.0 and its six functions. Watch it alongside the lesson notes to see how the framework organizes security outcomes.",
+              "embed": "https://www.youtube-nocookie.com/embed/pPPiaGU12Og"
+            },
+            {
+              "kind": "pdf",
+              "title": "NIST Cybersecurity Framework 2.0",
+              "provider": "NIST",
+              "url": "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf",
+              "summary": "The official downloadable CSF 2.0 document, available here in the lesson viewer."
+            }
+          ]
+        },
+        {
+          "title": "Threats, weaknesses, and risk",
+          "duration": "20 min",
+          "summary": "Learn to describe security problems as a plausible path to a meaningful outcome.",
+          "notes": [
+            "An asset is something worth protecting: data, accounts, money, service capacity, or trust. A threat is a possible cause of harm, such as a stolen credential, a mistake, a software defect, or a power failure. A vulnerability is a weakness that could help a threat cause harm.",
+            "Risk connects a scenario to its consequences. Instead of saying “the database is risky,” describe a path: a public endpoint accepts an unvalidated file name; an attacker changes the path; the service reads a private file; customer records are exposed. This statement gives a team something to investigate and fix.",
+            "Risk ratings are estimates, not measurements of truth. Likelihood, impact, exposure, and existing controls can help teams compare scenarios, but a red or green label does not replace the reasoning behind it. Write down assumptions and revisit them when evidence changes.",
+            "Prioritize consequences and reachable paths. A dramatic but unreachable scenario may matter less than a simple failure on a public, frequently used feature. Security work is a sequence of choices under limited time, so explaining why a risk matters is part of the technical work."
+          ],
+          "quiz": {
+            "question": "Which statement is a useful risk scenario?",
+            "options": [
+              "The application has vulnerabilities",
+              "A public upload endpoint may let an unauthenticated user overwrite another customer’s file",
+              "Security is important"
+            ],
+            "answer": 1,
+            "explanation": "A useful scenario names a path, an actor or cause, and a concrete impact."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Turn a vague concern into a scenario",
+            "prompt": "A team says, “Our admin area is risky.” Which follow-up gives the clearest starting point for assessment?",
+            "options": [
+              "Which action, identity, or data could be reached through the admin area, and what would happen if access were misused?",
+              "Can we buy a scanner today?",
+              "Can we mark the concern low so the release can continue?"
+            ],
+            "answer": 0,
+            "explanation": "Clarifying the asset, access path, and consequence turns a vague concern into a scenario that can be tested.",
+            "reflection": [
+              "Write one concrete risk scenario for an admin page, including a path and a possible consequence.",
+              "What evidence would help you estimate how exposed the feature is?",
+              "Name one assumption in your scenario that you would verify with the team."
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "NIST introduces a shared structure for understanding and managing cybersecurity risk."
+            },
+            {
+              "kind": "reading",
+              "title": "NIST CSF 2.0 Quick-Start Guides",
+              "provider": "NIST",
+              "url": "https://www.nist.gov/cyberframework/quick-start-guides",
+              "summary": "Short guides show how organizations can identify priorities, assess gaps, and plan improvements without treating a framework as a checklist."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Top 10",
+              "provider": "OWASP",
+              "url": "https://owasp.org/www-project-top-ten/",
+              "summary": "A regularly maintained awareness document that gives examples of common web application risk categories and helps turn vague concerns into specific questions."
+            }
+          ]
+        },
+        {
+          "title": "Trust boundaries and simple threat models",
+          "duration": "25 min",
+          "summary": "Trace where assumptions change between people, devices, services, and data stores.",
+          "notes": [
+            "A trust boundary is a place where data or authority crosses between components with different assumptions. Examples include a browser calling an API, one service calling another, or an application reading a file supplied by a user. Boundaries deserve attention because inputs and identity claims can be wrong or manipulated.",
+            "A small threat model can be made with four questions: what are we building; what matters to protect; where are the trust boundaries; and how could the design fail? A simple box-and-arrow sketch is often enough to start. Label users, services, data stores, and the direction of important data flows.",
+            "For every flow, ask what arrives, who controls it, how identity is established, and what the receiving component checks. A signed-in user is not automatically trusted for every action. A service should check permission close to the protected operation, using an identity and policy it can trust.",
+            "Threat modeling is not a prediction exercise. It helps a team notice assumptions early and choose a few controls to validate. Keep the model small, record what is out of scope, and update it when the architecture or the way people use the system changes."
+          ],
+          "quiz": {
+            "question": "Why is a browser-to-server connection a useful place to mark a trust boundary?",
+            "options": [
+              "The server receives data and claims from a component it does not control",
+              "The browser always sends correct information",
+              "The boundary means the network is encrypted"
+            ],
+            "answer": 0,
+            "explanation": "A server must treat client input as untrusted and verify it. Encryption protects a connection but does not make a client trustworthy."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Threat-model workbench",
+            "prompt": "A learner uploads a document that a reviewer can approve and an administrator can publish. Which first diagram is most useful?",
+            "options": [
+              "Learner browser → upload service → document store; reviewer and administrator identities shown with their separate actions",
+              "A list of security products the company owns",
+              "Only the public home page, because the rest is internal"
+            ],
+            "answer": 0,
+            "explanation": "The data flow and separate roles reveal trust boundaries and help the team ask who can upload, approve, and publish.",
+            "reflection": [
+              "List two valuable assets in the document workflow and why each matters.",
+              "Describe one trust boundary and what untrusted input crosses it.",
+              "Write one abuse case and one control you would validate."
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "NIST introduces a shared structure for understanding and managing cybersecurity risk."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Threat Modeling Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+              "summary": "A concise guide to identifying assets, trust boundaries, threats, and mitigations while a design is still easy to change."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Video Portal",
+              "provider": "OWASP",
+              "url": "https://videos.owasp.org/",
+              "summary": "Browse talks from the OWASP community on application security and threat modeling; select a beginner-level talk for this lesson."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2. Systems, networks, and identity",
+      "description": "Understand the basic pieces that security controls act on.",
+      "lessons": [
+        {
+          "title": "Computers, processes, and permissions",
+          "duration": "20 min",
+          "summary": "See how programs run and why users and permissions limit what a compromised process can do.",
+          "notes": [
+            "An operating system coordinates hardware and gives programs shared ways to use memory, storage, networks, and devices. A running program is a process. Processes execute with an identity and permissions, so the identity attached to a service can strongly affect the damage a bug can cause.",
+            "Files commonly have an owner and rules that distinguish reading, changing, and executing. The exact permission model varies by system, but the security idea is broadly useful: grant only the access needed for a task. A report generator that only reads reports should not be able to change payroll records or administer the whole computer.",
+            "Accounts, groups, service identities, and operating-system permissions are controls around the process. Running routine programs with administrator privileges removes an important boundary. Separate identities also make it easier to understand which component performed an action.",
+            "When investigating a system, ask which process handled the request, which identity it used, what files and network destinations it could reach, and where its logs go. These questions are useful even before a learner knows command-line syntax or a specific operating system."
+          ],
+          "quiz": {
+            "question": "A report process only needs to read one directory. What is a sound starting permission?",
+            "options": [
+              "Run as the system administrator",
+              "Give its dedicated identity read access to that directory only",
+              "Make every directory writable by every user"
+            ],
+            "answer": 1,
+            "explanation": "A narrowly scoped service identity limits the impact of a defect or compromise."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Permission design sandbox",
+            "prompt": "Choose access for a service that creates a daily summary from /srv/reports and should not alter source files.",
+            "options": [
+              "Dedicated identity with read-only access to the required reports and write access only to its output folder",
+              "Root access to the entire host",
+              "Shared human account with access to all company folders"
+            ],
+            "answer": 0,
+            "explanation": "Separate source and output access, and use a dedicated identity to reduce privilege and improve accountability.",
+            "reflection": [
+              "What files must this service read, and where should it be allowed to write?",
+              "If the process were compromised, what damage could still occur under your permission plan?",
+              "What log entry would help connect an action to this service identity?"
+            ]
+          },
+          "video": {
+            "title": "Linux Crash Course: Understanding File & Directory Permissions",
+            "provider": "YouTube · embedded lesson",
+            "embed": "https://www.youtube-nocookie.com/embed/4e669hSjaX8"
+          },
+          "resources": [
+            {
+              "kind": "reading",
+              "title": "OWASP Authentication Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+              "summary": "Connects identity controls to application design and helps explain why each service should run with only the access it needs."
+            },
+            {
+              "kind": "video",
+              "title": "Linux file permissions overview",
+              "provider": "YouTube · Linux beginners",
+              "url": "https://www.youtube.com/watch?v=4e669hSjaX8",
+              "summary": "A visual walkthrough of Linux file and directory permissions. Focus on how read, write, and execute access change what a process can do."
+            }
+          ]
+        },
+        {
+          "title": "How a web request reaches a service",
+          "duration": "25 min",
+          "summary": "Follow a request through names, network connections, HTTP, and TLS.",
+          "notes": [
+            "A browser starts with a name such as learn.example. DNS provides records that help it find a network destination. IP addresses identify endpoints at the network layer; ports help a machine deliver traffic to the right service. DNS answers can be cached, so the lookup is not necessarily repeated for every request.",
+            "Transport protocols provide ways to move data between endpoints. TCP establishes an ordered connection; UDP sends datagrams without the same connection behavior. Applications use these transports according to their needs. Firewalls and network rules can limit which endpoints are reachable, but an open connection does not tell us whether an application action is authorized.",
+            "HTTP describes requests and responses. A request includes a method, path, headers, and sometimes a body. A response includes a status code, headers, and possibly content. Cookies can carry session identifiers; headers can influence behavior. Servers must validate incoming values because clients control much of what they send.",
+            "HTTPS is HTTP protected by TLS. TLS helps protect data in transit and authenticate the server name using certificates. It does not prove that the service is free of vulnerabilities, and it does not protect a user from an authorized account being misused. Security controls need to exist at multiple layers."
+          ],
+          "quiz": {
+            "question": "What does TLS mainly add to a browser connection to a web service?",
+            "options": [
+              "Protection of data in transit and a way to authenticate the server",
+              "A guarantee that the application has no flaws",
+              "A check that every user is authorized for every action"
+            ],
+            "answer": 0,
+            "explanation": "TLS protects the connection and helps authenticate the server; application security and authorization remain separate responsibilities."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Trace the request",
+            "prompt": "A learner opens an HTTPS course page. Which sequence best describes the browser reaching it?",
+            "options": [
+              "Enter the name, resolve it with DNS, establish TLS to the server, send the HTTPS request",
+              "Send the protected HTTP request, then discover the server using DNS",
+              "Use TLS to authorize the learner to publish course content"
+            ],
+            "answer": 0,
+            "explanation": "Name resolution precedes connecting to the destination; TLS protects the connection, while application authorization decides what the learner may do.",
+            "reflection": [
+              "Describe what DNS contributes to this request and one thing DNS does not prove.",
+              "Name two pieces of an HTTP request that the server should treat carefully.",
+              "What protection does TLS provide, and what application risk remains after TLS is enabled?"
+            ]
+          },
+          "video": {
+            "title": "DNS Explained: Domain Name System",
+            "provider": "YouTube · embedded lesson",
+            "embed": "https://www.youtube-nocookie.com/embed/FsGUi5pXpLk"
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "6.S081 Lecture 21: Networking",
+              "provider": "MIT 6.S081, selected via Developer-Y cs-video-courses",
+              "url": "https://www.youtube.com/watch?v=Fcjychg4Tvk",
+              "summary": "MIT lecture introducing networking in the xv6 operating-system course."
+            },
+            {
+              "kind": "reading",
+              "title": "HTTP overview",
+              "provider": "MDN Web Docs",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview",
+              "summary": "An accessible explanation of the browser–server request/response model, including the role of HTTP messages."
+            },
+            {
+              "kind": "reading",
+              "title": "DNS Explained",
+              "provider": "Cloudflare Learning Center",
+              "url": "https://www.cloudflare.com/learning/dns/what-is-dns/",
+              "summary": "A visual introduction to how domain names are translated into information that helps a browser reach a service."
+            }
+          ]
+        },
+        {
+          "title": "Identity, authentication, and authorization",
+          "duration": "20 min",
+          "summary": "Separate proving who someone is from deciding what they can do.",
+          "notes": [
+            "Identification is the claim of an identity; authentication checks evidence for that claim; authorization decides which actions are allowed. These are related but distinct steps. A successful sign-in should not automatically give a user broad access to data or administrative actions.",
+            "Passwords are one authentication factor and can be guessed, reused, or stolen. Multi-factor authentication asks for evidence from another category, such as possession of a registered device. MFA reduces some account-takeover risks, but recovery processes and session theft still need consideration.",
+            "Authorization can be based on roles, attributes, relationships, or a combination. Whatever model is used, the policy should be clear and enforced where the protected action occurs. Hiding an interface control is not enough: a client can be modified or a request sent directly.",
+            "A good access design states who may do what to which resource under what conditions. Use separate roles for distinct duties, avoid shared accounts, review permissions over time, and log sensitive changes. Think about how an account is created, changed, recovered, disabled, and audited—not only how it signs in."
+          ],
+          "quiz": {
+            "question": "A user can sign in successfully but must not approve their own document. Which decision enforces that rule?",
+            "options": [
+              "Authentication",
+              "Authorization",
+              "DNS resolution"
+            ],
+            "answer": 1,
+            "explanation": "Authentication establishes an identity; authorization decides whether that identity may perform the approval."
+          },
+          "practice": {
+            "type": "access-control",
+            "title": "Access-control sandbox",
+            "prompt": "Use the sample app to see why a server must verify permission instead of trusting a role claim supplied by the browser.",
+            "reflection": [
+              "What did the vulnerable demo trust, and why could the learner change it?",
+              "Where should the authorization decision happen in a real publish request?",
+              "Name one test case that should deny access and one that should allow it."
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "NIST introduces a common structure for identifying and managing cybersecurity risk."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Authorization Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+              "summary": "Practical guidance on enforcing access decisions server-side, denying by default, and checking permissions for each protected action."
+            },
+            {
+              "kind": "reading",
+              "title": "NIST Digital Identity Guidelines",
+              "provider": "NIST",
+              "url": "https://pages.nist.gov/800-63-4/",
+              "summary": "The current NIST guidance explains identity proofing, authentication, authenticators, and federation as distinct parts of digital identity."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3. Building safer software and services",
+      "description": "Recognize common application risks and practical design responses.",
+      "lessons": [
+        {
+          "title": "Untrusted input and injection",
+          "duration": "25 min",
+          "summary": "Understand how data becomes dangerous when software mistakes it for instructions.",
+          "notes": [
+            "Applications receive input from browsers, APIs, files, queues, and other services. A value may be malformed, unexpected, or deliberately chosen to affect application behavior. Validate that input matches the intended type, size, and format, but do not treat validation as the only defense.",
+            "Injection happens when a program combines data with an instruction language in a way that lets the data change the instruction. SQL injection is one example: an unsafe query can interpret user-supplied text as part of the database command. Similar design mistakes occur with shell commands, templates, and other interpreters.",
+            "Parameterized queries keep data separate from SQL instructions. Safe APIs and context-aware output encoding serve similar goals in other contexts. Escaping rules differ by destination, so hand-written filters often miss edge cases. Prefer well-maintained libraries and APIs that preserve the code/data boundary.",
+            "Errors should help developers diagnose a problem without revealing secrets or internal details to an attacker. Tests should include ordinary, boundary, and malformed input. The deeper lesson is to identify where data crosses into a language or privileged operation, then use a design that keeps it data."
+          ],
+          "quiz": {
+            "question": "What is the core reason parameterized database queries help prevent SQL injection?",
+            "options": [
+              "They keep supplied values separate from query instructions",
+              "They encrypt every database record",
+              "They prevent users from submitting any input"
+            ],
+            "answer": 0,
+            "explanation": "Separating values from SQL structure prevents input from changing the meaning of the query."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Safer query design",
+            "prompt": "A search endpoint inserts a supplied name directly into a SQL string. Which change most directly addresses the design flaw?",
+            "options": [
+              "Use a parameterized query and validate the expected input type",
+              "Hide the search box with CSS",
+              "Block only the characters seen in one example attack"
+            ],
+            "answer": 0,
+            "explanation": "Parameterized queries preserve the boundary between data and instructions; validation adds an appropriate input constraint.",
+            "reflection": [
+              "In your own words, describe how data could become part of a database instruction.",
+              "What is one reason a hand-written blocklist can fail?",
+              "Name one test input you would include to check the query boundary safely."
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "OWASP Top 10: application security risks",
+              "provider": "Security learning video",
+              "url": "https://www.youtube.com/watch?v=Jzr0Jdnq_EI",
+              "summary": "A visual overview of common web application risks and their mitigations."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP SQL Injection Prevention Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+              "summary": "Explains why parameterized queries preserve the boundary between SQL instructions and values supplied by users."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Input Validation Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+              "summary": "Shows where validation helps and why it should complement safe APIs and context-aware output handling."
+            }
+          ]
+        },
+        {
+          "title": "Sessions and access control in web apps",
+          "duration": "25 min",
+          "summary": "Explore how a signed-in browser keeps a session and how the server should enforce permissions.",
+          "notes": [
+            "HTTP requests are independent, so applications commonly use a session identifier to associate requests with a signed-in user. That identifier acts like a temporary bearer credential: someone who steals it may be able to act as the user until it expires or is revoked.",
+            "Session cookies should be protected with appropriate attributes. Secure limits transmission to HTTPS, HttpOnly prevents ordinary browser scripts from reading the cookie, and SameSite can reduce some cross-site request risks. Cookie settings do not replace authorization checks or protection against all cross-site attacks.",
+            "Authorization must be checked for each protected operation, using the authenticated identity and the resource being accessed. A route may require an administrator role, while a document operation may additionally require ownership or reviewer assignment. Default-deny behavior helps ensure that unlisted cases do not become allowed accidentally.",
+            "Cross-site request forgery exploits a browser’s automatic use of credentials in some situations. Defenses depend on the application, but may include anti-CSRF tokens, SameSite cookies, origin checks, and requiring re-authentication for sensitive actions. Security controls should match the actual threat and be tested at the server boundary."
+          ],
+          "quiz": {
+            "question": "Where should a permission check for publishing a document happen?",
+            "options": [
+              "Only in the browser before showing the Publish button",
+              "On the server for the publish operation",
+              "In a comment beside the user interface"
+            ],
+            "answer": 1,
+            "explanation": "The server controls the protected action and must verify permission each time it is requested."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Review the publish flow",
+            "prompt": "A learner edits a request in browser tools and changes documentId to another learner’s file. What control should stop the publish operation?",
+            "options": [
+              "The server verifies this identity may publish that specific document",
+              "The page uses a hidden button",
+              "The document identifier is hard to guess"
+            ],
+            "answer": 0,
+            "explanation": "Unpredictable identifiers and hidden controls are not authorization. The server must check the identity’s rights to the requested resource.",
+            "reflection": [
+              "Write the authorization rule for publishing one approved document.",
+              "Which account and resource attributes must the server verify before the action?",
+              "What negative test would prove that one learner cannot act on another learner’s document?"
+            ]
+          },
+          "video": {
+            "title": "OWASP Top 10 2025: Your complete guide to securing your applications",
+            "provider": "Aikido Security · embedded from YouTube",
+            "embed": "https://www.youtube-nocookie.com/embed/Jzr0Jdnq_EI"
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "OWASP Top 10: application security risks",
+              "provider": "Security learning video",
+              "url": "https://www.youtube.com/watch?v=Jzr0Jdnq_EI",
+              "summary": "A visual overview of common web application risks and mitigation concepts."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP AppSec California talks archive",
+              "provider": "PaulSec/awesome-sec-talks, referenced by sbilly/awesome-security",
+              "url": "https://www.youtube.com/playlist?list=PLpr-xdpM8wG8fNc1gwXz4SXKTRB4yZB5v",
+              "summary": "An archive of security conference talks; optional enrichment, not required to complete the lesson."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Session Management Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+              "summary": "Covers session identifiers, cookie protections, session lifecycle, and server-side controls for signed-in web applications."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Video Portal",
+              "provider": "OWASP",
+              "url": "https://videos.owasp.org/",
+              "summary": "Browse official community talks on web application security, sessions, and access control."
+            }
+          ]
+        },
+        {
+          "title": "Data protection, secrets, and encryption",
+          "duration": "25 min",
+          "summary": "Choose sensible protections for data at rest, data in transit, and credentials used by services.",
+          "notes": [
+            "Start data protection by asking what information the service truly needs, where it moves, who uses it, and how long it remains useful. Collecting less sensitive data reduces what can be exposed. Retention and deletion policies are security controls as well as operational decisions.",
+            "Encryption transforms data so it is not readily readable without the appropriate key. Encryption in transit protects a connection; encryption at rest can protect stored media when an underlying storage layer is accessed. Neither form decides which application user is allowed to read the decrypted data.",
+            "Keys and secrets need their own protections: limit who and what can access them, avoid putting them in source code or logs, rotate them when exposed, and use a managed secret store or workload identity where available. A secret that many people and services share is difficult to audit and revoke safely.",
+            "Passwords should be stored using a password-hashing design intended for that purpose, not reversible encryption or plain text. Applications should use established cryptographic libraries and protocols rather than inventing algorithms. Security depends on key management and correct use, not on an algorithm name alone."
+          ],
+          "quiz": {
+            "question": "What does encryption at rest fail to decide by itself?",
+            "options": [
+              "Whether an authenticated application user is authorized to read a particular record",
+              "Whether stored bytes are transformed cryptographically",
+              "Whether a storage medium is physically present"
+            ],
+            "answer": 0,
+            "explanation": "Encryption protects data in certain access scenarios, but the application still needs authorization and safe key handling."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Secret-handling review",
+            "prompt": "A developer accidentally commits a cloud API key to a public repository. What is the strongest response?",
+            "options": [
+              "Revoke or rotate the exposed key, investigate its use, and move secrets to an appropriate managed mechanism",
+              "Delete the visible line and assume the old key is safe",
+              "Rename the key so scanners cannot find it"
+            ],
+            "answer": 0,
+            "explanation": "A published credential should be considered compromised; remove its authority and investigate before establishing safer storage.",
+            "reflection": [
+              "Why is deleting the key from the latest source version not enough?",
+              "What evidence would you inspect to determine whether the key was used?",
+              "Describe a safer way for the service to receive the credential it needs."
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "OWASP Top 10: application security risks",
+              "provider": "Security learning video",
+              "url": "https://www.youtube.com/watch?v=Jzr0Jdnq_EI",
+              "summary": "A visual overview of common web application risks and their mitigations."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Cryptographic Storage Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html",
+              "summary": "Guidance for choosing modern cryptography and protecting stored data while avoiding custom cryptographic designs."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Secrets Management Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+              "summary": "Explains how to create, store, rotate, scope, and monitor credentials such as API keys and service passwords."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4. Operating securely and responding",
+      "description": "Connect basic controls, useful evidence, and a final security review.",
+      "lessons": [
+        {
+          "title": "Secure defaults, updates, and dependencies",
+          "duration": "20 min",
+          "summary": "See how routine engineering choices reduce common exposure before an incident occurs.",
+          "notes": [
+            "Secure defaults make the safer configuration the easiest one to deploy. Examples include private-by-default storage, narrow service permissions, strong session settings, and disabling features that are not needed. Teams should know which defaults can be changed and how changes are reviewed.",
+            "Updates correct defects, including security defects, in operating systems, applications, libraries, and devices. A team needs an inventory of important components, a way to assess relevant updates, and a deployment plan that considers urgency and service risk. “We will patch later” is not a process unless later has an owner and a deadline.",
+            "Modern applications depend on third-party packages and base images. Track what is used, prefer maintained sources, review high-impact changes, and remove unused components. Automated dependency alerts are useful signals but need a response process and a way to confirm which products are affected.",
+            "Backups, recovery procedures, and configuration review help limit the cost of mistakes. A backup that has never been restored is only an assumption. Periodically test restore steps, understand who can alter backup copies, and include recovery time in service planning."
+          ],
+          "quiz": {
+            "question": "What makes a secure default valuable?",
+            "options": [
+              "It makes a safer configuration the normal starting point",
+              "It removes the need for testing and updates",
+              "It guarantees no user can make a mistake"
+            ],
+            "answer": 0,
+            "explanation": "Good defaults reduce avoidable exposure while still requiring maintenance and review."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Release readiness check",
+            "prompt": "A service release adds an unused debug endpoint and uses an old library with a known fix available. What is the best next step?",
+            "options": [
+              "Disable the unnecessary endpoint and plan a tested dependency update before release",
+              "Ship first and rely on encryption",
+              "Leave the endpoint available but rename it"
+            ],
+            "answer": 0,
+            "explanation": "Remove unnecessary exposure and update the affected component through a reviewed, tested change.",
+            "reflection": [
+              "Which unnecessary service or feature would you disable, and how would you confirm it is unused?",
+              "What would you check before updating the vulnerable dependency?",
+              "Who should own the update deadline and how will completion be verified?"
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "NIST’s framework video introduces how organizations structure cybersecurity risk work."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Software Supply Chain Security Cheat Sheet",
+              "provider": "OWASP",
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html",
+              "summary": "A lifecycle view of dependency and build risks, with practices for reducing exposure and improving visibility."
+            },
+            {
+              "kind": "reading",
+              "title": "NIST Secure Software Development Framework",
+              "provider": "NIST",
+              "url": "https://csrc.nist.gov/projects/ssdf",
+              "summary": "NIST’s framework describes secure development practices teams can integrate into an existing software lifecycle."
+            }
+          ]
+        },
+        {
+          "title": "Logs, alerts, and the first hour of an incident",
+          "duration": "25 min",
+          "summary": "Know what evidence is useful and how to respond without destroying it.",
+          "notes": [
+            "Logs record events that help explain what a system did. Useful security records often include sign-ins, permission changes, important administrative actions, service errors, and changes to sensitive data. Decide which questions the logs should answer before collecting everything indiscriminately.",
+            "A log needs context: a timestamp, a consistent identity, the action, the target resource, and a result where possible. Protect logs from unauthorized changes and access, avoid recording passwords or tokens, and make sure clock differences do not make the timeline misleading.",
+            "An alert is a signal to investigate, not proof of a breach. Confirm the event, compare it with expected behavior, gather related evidence, and record what is known and unknown. Preserve relevant records before changes erase or rotate them.",
+            "Response is coordinated work. The first actions may include limiting an active threat, protecting people and data, preserving evidence, and contacting the responsible team. The right sequence depends on impact and urgency. After recovery, record decisions and improve controls, runbooks, and detections based on what was learned."
+          ],
+          "quiz": {
+            "question": "An alert reports an unfamiliar administrator sign-in. What is a sound initial response?",
+            "options": [
+              "Validate the event, preserve related records, and begin a timeline",
+              "Delete the logs to stop further alerts",
+              "Assume the alert proves who attacked the system"
+            ],
+            "answer": 0,
+            "explanation": "Validation and evidence preservation support a careful investigation and proportionate response."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Incident response tabletop",
+            "prompt": "A new administrator account appears just before a sensitive storage policy changes. Which immediate work best supports a safe response?",
+            "options": [
+              "Preserve identity and audit records, validate who made the changes, assess current exposure, and coordinate containment",
+              "Publish the suspected employee’s name and delete the account logs",
+              "Wait for more alerts before checking whether sensitive data is public"
+            ],
+            "answer": 0,
+            "explanation": "Preserve evidence and establish scope while the responsible team evaluates containment and user impact.",
+            "reflection": [
+              "What facts would you add to the first incident timeline?",
+              "Which records and people could help confirm the account’s activity?",
+              "Name one immediate containment option and a possible side effect to consider."
+            ]
+          },
+          "video": {
+            "title": "Incident Response: NIST SP 800-61r3 Explained",
+            "provider": "YouTube · embedded lesson",
+            "embed": "https://www.youtube-nocookie.com/embed/7_d74-9xKDA"
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "NIST’s framework video introduces how organizations structure cybersecurity risk work."
+            },
+            {
+              "kind": "reading",
+              "title": "NIST Incident Response Recommendations (SP 800-61 Rev. 3)",
+              "provider": "NIST",
+              "url": "https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+              "summary": "Current NIST guidance integrates incident response with cybersecurity risk management and covers preparation, detection, response, and recovery."
+            },
+            {
+              "kind": "reading",
+              "title": "NIST Cybersecurity Framework resources",
+              "provider": "NIST",
+              "url": "https://www.nist.gov/cyberframework",
+              "summary": "Review NIST’s official learning resources alongside the incident response guide and focus on response and recovery outcomes."
+            }
+          ]
+        },
+        {
+          "title": "Final exercise: review a small service",
+          "duration": "45 min",
+          "summary": "Use the course vocabulary to make a concise, evidence-based security review.",
+          "notes": [
+            "Use this fictional service: learners upload documents; reviewers approve them; administrators publish approved documents; the service stores files and sends email notifications. State that your review covers this flow only. A useful review has a boundary, assumptions, and an explicit list of things it did not assess.",
+            "Identify assets and goals. Consider private documents, user identities, approval decisions, service availability, and notification contents. Mark the browser-to-service and service-to-storage boundaries, and note which roles can perform each action.",
+            "Write a few concrete abuse or failure cases. For example, a learner changes a document identifier and reads another learner’s file; a notification accidentally includes a private download link; or a stolen reviewer session is used to approve a malicious upload. Choose cases based on impact and plausible paths.",
+            "For each prioritized case, name a control and evidence that would help verify it. Server-side resource authorization can be checked with tests using two learner accounts. Private object storage can be reviewed in configuration. Audit records can be checked for actor, action, resource, outcome, and timestamp.",
+            "Finish with a short report: summary, scope, assumptions, findings with evidence and impact, recommended fixes, and one remaining uncertainty. A good beginner review is honest about what was and was not checked. It does not claim a system is completely secure."
+          ],
+          "quiz": {
+            "question": "Which final review finding is most useful to an engineering team?",
+            "options": [
+              "A reproducible test shows learner A can read learner B’s document by changing an ID; enforce ownership on the server",
+              "The system feels unsafe",
+              "Install several security tools"
+            ],
+            "answer": 0,
+            "explanation": "A clear reproduction, concrete impact, and implementable fix make a finding actionable."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Security review decision",
+            "prompt": "Select the review plan that best applies Security 101 without claiming specialist depth.",
+            "options": [
+              "State scope, map roles and data flows, test one high-impact access rule, document evidence and a practical fix",
+              "Run an unapproved attack against a real service and declare it secure if nothing breaks",
+              "List every security term from the course without connecting it to the service"
+            ],
+            "answer": 0,
+            "explanation": "A bounded review with evidence and an honest limitation demonstrates useful security reasoning without overclaiming.",
+            "reflection": [
+              "Define the scope and one important assumption for the fictional review.",
+              "Write one finding with a reproduction, impact, and practical recommendation.",
+              "What did your review not test, and what deeper follow-up would you recommend?"
+            ]
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+              "provider": "NIST",
+              "url": "https://www.youtube.com/watch?v=pPPiaGU12Og",
+              "summary": "NIST’s framework video introduces how organizations structure cybersecurity risk work."
+            },
+            {
+              "kind": "reading",
+              "title": "OWASP Web Security Testing Guide",
+              "provider": "OWASP",
+              "url": "https://owasp.org/www-project-web-security-testing-guide/",
+              "summary": "A structured testing reference for web applications. This course uses it only as a next-step map; practice stays in authorized environments."
+            },
+            {
+              "kind": "reading",
+              "title": "NIST Cybersecurity Framework 2.0",
+              "provider": "NIST",
+              "url": "https://www.nist.gov/cyberframework",
+              "summary": "Use the framework to organize the final review findings by outcome and identify sensible follow-up work."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "curationSources": [
+    "https://github.com/sbilly/awesome-security",
+    "https://github.com/okhosting/awesome-cyber-security"
+  ]
+}

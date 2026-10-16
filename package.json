@@ -1,0 +1,22 @@
+{
+  "name": "opentech-academy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 8000",
+    "build": "node scripts/copy-site.mjs && vite build",
+    "convex:dev": "convex dev",
+    "convex:deploy": "convex deploy"
+  },
+  "dependencies": {
+    "@convex-dev/better-auth": "latest",
+    "better-auth": "~1.6.15",
+    "convex": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "wrangler": "4.135.0"
+  }
+}

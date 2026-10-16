@@ -1,0 +1,594 @@
+{
+  "slug": "computer-systems-foundations",
+  "title": "Computer Systems Foundations",
+  "subtitle": "Start from the basics: understand computers, operating systems, networks, and the software people build.",
+  "summary": "Start from the basics: understand computers, operating systems, networks, and the software people build.",
+  "duration": "18–24 hours",
+  "estimatedDuration": "18–24 hours",
+  "level": "Foundations → guided practice",
+  "audience": "Learners building practical computer engineering skills",
+  "units": [
+    {
+      "title": "1. Computer hardware and data",
+      "description": "CPU, memory, storage, input and output, binary representation, and how hardware executes software.",
+      "lessons": [
+        {
+          "title": "How the main parts of a computer work together",
+          "duration": "30 min",
+          "summary": "How the main parts of a computer work together. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "A computer carries out instructions using several parts. The CPU executes them, memory holds the data and code currently in use, and storage retains files when the computer is off. Input devices provide information; output devices present results. Programs rely on these components together, so a slow task may be waiting on the processor, memory, storage, or a device.",
+            "When diagnosing a slowdown, identify what the computer is doing and observe the resource involved. High CPU use during video export may be expected; memory pressure can cause swapping, while a full disk can prevent updates or saves. Change one thing at a time and compare the result."
+          ],
+          "quiz": {
+            "question": "Which component executes a program’s instructions?",
+            "options": [
+              "The CPU.",
+              "The storage device permanently keeps every active value.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "The CPU. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Computer hardware and data",
+            "prompt": "A learner exports a video and sees high CPU use. What does that suggest?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Check whether processing work is the bottleneck before changing storage settings.",
+              "Delete project files to reduce processor use."
+            ],
+            "answer": 1,
+            "explanation": "Check whether processing work is the bottleneck before changing storage settings. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "reading",
+              "title": "MIT Introduction to Computer Science and Programming in Python",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+              "summary": "Free beginner lectures, notes, and assignments."
+            },
+            {
+              "kind": "reading",
+              "title": "Operating Systems: Three Easy Pieces",
+              "provider": "University of Wisconsin authors",
+              "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+              "summary": "Free online textbook for deeper reading on processes, memory, and storage."
+            },
+            {
+              "kind": "video",
+              "title": "Lecture 1: What is Computation?",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://www.youtube.com/watch?v=ytpJdnlu9ug",
+              "summary": "MIT’s introductory lecture uses concrete examples to explain what computation is."
+            }
+          ]
+        },
+        {
+          "title": "Bits, bytes, files, and resource limits",
+          "duration": "30 min",
+          "summary": "Bits, bytes, files, and resource limits. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "Digital systems encode information as bits, which can represent numbers, letters, pixels, and sound. Eight bits make a byte; larger units describe files and memory. A file format defines how encoded data is organized, while its name or extension is only a hint about that format.",
+            "File size affects upload limits, storage, and memory use. A safe service sets limits for the task, validates file type and content appropriately, and handles files without trusting the extension alone. Resource limits keep one unusually large input from exhausting a system."
+          ],
+          "quiz": {
+            "question": "Which component executes a program’s instructions?",
+            "options": [
+              "The CPU.",
+              "The storage device permanently keeps every active value.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "The CPU. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Computer hardware and data",
+            "prompt": "A learner exports a video and sees high CPU use. What does that suggest?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Check whether processing work is the bottleneck before changing storage settings.",
+              "Delete project files to reduce processor use."
+            ],
+            "answer": 1,
+            "explanation": "Check whether processing work is the bottleneck before changing storage settings. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "Lecture 1: What is Computation?",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://www.youtube.com/watch?v=ytpJdnlu9ug",
+              "summary": "MIT lecture introducing computation and the foundations beneath software."
+            },
+            {
+              "kind": "reading",
+              "title": "MIT Introduction to Computer Science and Programming in Python",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+              "summary": "Free beginner lectures, notes, and assignments."
+            },
+            {
+              "kind": "reading",
+              "title": "Operating Systems: Three Easy Pieces",
+              "provider": "University of Wisconsin authors",
+              "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+              "summary": "Free online textbook for deeper reading on processes, memory, and storage."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2. Operating systems and files",
+      "description": "Applications, processes, filesystems, users, permissions, and the roles of Windows, macOS, and Linux.",
+      "lessons": [
+        {
+          "title": "Programs, processes, and the operating system",
+          "duration": "30 min",
+          "summary": "Programs, processes, and the operating system. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "An operating system schedules processes and gives them controlled access to memory, files, devices, and networks. A process is a running instance of a program; multiple processes can use the same application code while having different data and permissions.",
+            "If one app freezes, the operating system and other processes may still work. A service should run under an identity with only the permissions it needs. That makes failures easier to isolate and limits what a compromised process can change."
+          ],
+          "quiz": {
+            "question": "Why should a report service use a limited account?",
+            "options": [
+              "Its permissions limit damage if the process or its inputs are compromised.",
+              "All services need administrator access to read files.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Its permissions limit damage if the process or its inputs are compromised. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Operating systems and files",
+            "prompt": "A process needs to read one folder and write one output. What permission plan fits?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Grant read access to the source and write access only to the output location.",
+              "Give it write access across the whole filesystem."
+            ],
+            "answer": 1,
+            "explanation": "Grant read access to the source and write access only to the output location. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "6.S081 Lecture 3: OS Organization and System Calls",
+              "provider": "MIT 6.S081, selected via Developer-Y cs-video-courses",
+              "url": "https://www.youtube.com/watch?v=o44d---Dk4o",
+              "summary": "MIT lecture on operating-system structure and system calls."
+            },
+            {
+              "kind": "reading",
+              "title": "Operating Systems: Three Easy Pieces",
+              "provider": "University of Wisconsin authors",
+              "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+              "summary": "Free online textbook for deeper reading on processes, memory, and storage."
+            },
+            {
+              "kind": "reading",
+              "title": "Introduction to Linux",
+              "provider": "Linux Foundation",
+              "url": "https://training.linuxfoundation.org/training/introduction-to-linux/",
+              "summary": "Free introductory Linux lessons and course outline."
+            }
+          ]
+        },
+        {
+          "title": "Files, paths, and permissions",
+          "duration": "30 min",
+          "summary": "Files, paths, and permissions. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "A filesystem organizes files under directories. An absolute path starts from the filesystem root; a relative path starts from the current working directory. Permissions govern whether an identity can read, write, or execute a file or traverse a directory.",
+            "A service that reads reports and creates a summary needs read access to its input and write access only to its output. Broad write permission makes mistakes and compromise more damaging. When access fails, check the path, owner, and permission rules before granting more access."
+          ],
+          "quiz": {
+            "question": "Why should a report service use a limited account?",
+            "options": [
+              "Its permissions limit damage if the process or its inputs are compromised.",
+              "All services need administrator access to read files.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Its permissions limit damage if the process or its inputs are compromised. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Operating systems and files",
+            "prompt": "A process needs to read one folder and write one output. What permission plan fits?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Grant read access to the source and write access only to the output location.",
+              "Give it write access across the whole filesystem."
+            ],
+            "answer": 1,
+            "explanation": "Grant read access to the source and write access only to the output location. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "6.S081 Lecture 3: OS Organization and System Calls",
+              "provider": "MIT 6.S081, selected via Developer-Y cs-video-courses",
+              "url": "https://www.youtube.com/watch?v=o44d---Dk4o",
+              "summary": "MIT lecture on operating-system structure and system calls."
+            },
+            {
+              "kind": "reading",
+              "title": "Operating Systems: Three Easy Pieces",
+              "provider": "University of Wisconsin authors",
+              "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+              "summary": "Free online textbook for deeper reading on processes, memory, and storage."
+            },
+            {
+              "kind": "reading",
+              "title": "Introduction to Linux",
+              "provider": "Linux Foundation",
+              "url": "https://training.linuxfoundation.org/training/introduction-to-linux/",
+              "summary": "Free introductory Linux lessons and course outline."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3. Linux and the command line",
+      "description": "Terminal basics, navigating files, common commands, safe experimentation, and beginner shell concepts.",
+      "lessons": [
+        {
+          "title": "Read the shell prompt and navigate safely",
+          "duration": "30 min",
+          "summary": "Read the shell prompt and navigate safely. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "A shell reads a command and starts a program with the arguments you provide. Commands such as pwd, ls, and cd help you understand and change directory context. The prompt may show the user and location, which are important clues about what a command will affect.",
+            "Start with read-only inspection. Before running a command that deletes, overwrites, or changes permissions, read its help, confirm the path, and try it on disposable files. Avoid pasting commands you do not understand, especially when they use administrator privileges."
+          ],
+          "quiz": {
+            "question": "What should you do before running an unfamiliar command that changes files?",
+            "options": [
+              "Read its help and inspect the target path; try it on disposable data first.",
+              "Run it as administrator so it cannot fail.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Read its help and inspect the target path; try it on disposable data first. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Linux and the command line",
+            "prompt": "A long command gives an unexpected result. What is the best debugging method?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Run and inspect the commands one at a time.",
+              "Add more commands until the output looks right."
+            ],
+            "answer": 1,
+            "explanation": "Run and inspect the commands one at a time. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "Introduction to Linux",
+              "provider": "Linux Foundation course",
+              "url": "https://www.youtube.com/watch?v=sWbUDq4S6Y8",
+              "summary": "Walk through Linux command-line basics and common system tools."
+            },
+            {
+              "kind": "reading",
+              "title": "Introduction to Linux",
+              "provider": "Linux Foundation",
+              "url": "https://training.linuxfoundation.org/training/introduction-to-linux/",
+              "summary": "Free introductory Linux lessons and course outline."
+            },
+            {
+              "kind": "reading",
+              "title": "MIT Introduction to Computer Science and Programming in Python",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+              "summary": "Free beginner lectures, notes, and assignments."
+            },
+            {
+              "kind": "pdf",
+              "title": "Introduction to Linux — Course Outline",
+              "provider": "Linux Foundation",
+              "url": "https://courses.edx.org/asset-v1%3ALinuxFoundationX%2BLFS101x%2B1T2017%2Btype%40asset%2Bblock/LFS101x_-_Introduction_to_Linux_Outline.pdf",
+              "summary": "A concise publisher-provided outline of the Linux Foundation’s introductory Linux course."
+            }
+          ]
+        },
+        {
+          "title": "Combine commands and inspect their output",
+          "duration": "30 min",
+          "summary": "Combine commands and inspect their output. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "A pipe passes one command’s output to another command as input. Redirection can save output to a file, but operators such as > may replace an existing file. Small command sequences are easier to reason about when each step has a known input and output.",
+            "If a pipeline gives an unexpected result, inspect each command separately and confirm the data passed between them. Keep a backup before overwriting important output. This habit makes shell work more predictable and turns a long command into steps you can debug."
+          ],
+          "quiz": {
+            "question": "What should you do before running an unfamiliar command that changes files?",
+            "options": [
+              "Read its help and inspect the target path; try it on disposable data first.",
+              "Run it as administrator so it cannot fail.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Read its help and inspect the target path; try it on disposable data first. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Linux and the command line",
+            "prompt": "A long command gives an unexpected result. What is the best debugging method?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Run and inspect the commands one at a time.",
+              "Add more commands until the output looks right."
+            ],
+            "answer": 1,
+            "explanation": "Run and inspect the commands one at a time. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "Introduction to Linux",
+              "provider": "Linux Foundation course",
+              "url": "https://www.youtube.com/watch?v=sWbUDq4S6Y8",
+              "summary": "Walk through Linux command-line basics and common system tools."
+            },
+            {
+              "kind": "reading",
+              "title": "Introduction to Linux",
+              "provider": "Linux Foundation",
+              "url": "https://training.linuxfoundation.org/training/introduction-to-linux/",
+              "summary": "Free introductory Linux lessons and course outline."
+            },
+            {
+              "kind": "reading",
+              "title": "MIT Introduction to Computer Science and Programming in Python",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+              "summary": "Free beginner lectures, notes, and assignments."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4. Networks and the web",
+      "description": "Networks, IP addresses, DNS, routers, websites, browsers, HTTP, and a first look at encryption.",
+      "lessons": [
+        {
+          "title": "How names and addresses help devices connect",
+          "duration": "30 min",
+          "summary": "How names and addresses help devices connect. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "An IP address identifies a network endpoint, while a port helps a computer deliver traffic to the right service. DNS records help translate names into information used to locate endpoints. Routers move packets between networks based on routing information.",
+            "These systems answer different questions: DNS helps locate a name, routing determines a path, and a port identifies a destination service. A reachable port does not mean an application action is authorized. Troubleshoot by checking the name, address, route, and service separately."
+          ],
+          "quiz": {
+            "question": "What does DNS help a browser do?",
+            "options": [
+              "Resolve a domain name to records used to locate a network destination.",
+              "Encrypt every page and authorize every user.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Resolve a domain name to records used to locate a network destination. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Networks and the web",
+            "prompt": "A website works by IP but not by name. What should you inspect?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Check name resolution and the relevant DNS record/cache.",
+              "Change the file permissions on the browser."
+            ],
+            "answer": 1,
+            "explanation": "Check name resolution and the relevant DNS record/cache. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "6.S081 Lecture 21: Networking",
+              "provider": "MIT 6.S081, selected via Developer-Y cs-video-courses",
+              "url": "https://www.youtube.com/watch?v=Fcjychg4Tvk",
+              "summary": "MIT lecture introducing networking in the xv6 operating-system course."
+            },
+            {
+              "kind": "reading",
+              "title": "HTTP overview",
+              "provider": "MDN Web Docs",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview",
+              "summary": "A clear guide to browser and server requests and responses."
+            },
+            {
+              "kind": "reading",
+              "title": "What is DNS?",
+              "provider": "Cloudflare Learning Center",
+              "url": "https://www.cloudflare.com/learning/dns/what-is-dns/",
+              "summary": "An accessible introduction to domain name resolution."
+            }
+          ]
+        },
+        {
+          "title": "What happens during an HTTPS web request",
+          "duration": "30 min",
+          "summary": "What happens during an HTTPS web request. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "HTTP defines how clients and servers exchange requests and responses. Requests carry a method, path, headers, and sometimes a body; responses carry a status, headers, and content. HTTPS protects HTTP traffic with TLS, which helps protect data in transit and authenticate the server name.",
+            "TLS does not prove that an application has no bugs or that a signed-in user may access every record. Servers still validate input and enforce permissions. When a page fails, separate name resolution, connection setup, TLS, HTTP status, and application behavior."
+          ],
+          "quiz": {
+            "question": "What does DNS help a browser do?",
+            "options": [
+              "Resolve a domain name to records used to locate a network destination.",
+              "Encrypt every page and authorize every user.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Resolve a domain name to records used to locate a network destination. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Networks and the web",
+            "prompt": "A website works by IP but not by name. What should you inspect?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Check name resolution and the relevant DNS record/cache.",
+              "Change the file permissions on the browser."
+            ],
+            "answer": 1,
+            "explanation": "Check name resolution and the relevant DNS record/cache. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "6.S081 Lecture 21: Networking",
+              "provider": "MIT 6.S081, selected via Developer-Y cs-video-courses",
+              "url": "https://www.youtube.com/watch?v=Fcjychg4Tvk",
+              "summary": "MIT lecture introducing networking in the xv6 operating-system course."
+            },
+            {
+              "kind": "reading",
+              "title": "HTTP overview",
+              "provider": "MDN Web Docs",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview",
+              "summary": "A clear guide to browser and server requests and responses."
+            },
+            {
+              "kind": "reading",
+              "title": "What is DNS?",
+              "provider": "Cloudflare Learning Center",
+              "url": "https://www.cloudflare.com/learning/dns/what-is-dns/",
+              "summary": "An accessible introduction to domain name resolution."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "5. Programs, Git, and troubleshooting",
+      "description": "Variables and scripts, version control basics, reading error messages, and documenting a small computer setup.",
+      "lessons": [
+        {
+          "title": "Break a problem into inputs and program steps",
+          "duration": "30 min",
+          "summary": "Break a problem into inputs and program steps. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "Programs combine data with instructions. Variables hold values, conditions select a path, loops repeat work, and functions package reusable behavior. A useful debugging process begins with the observed result and a small reproducible example rather than a guess about the cause.",
+            "Read the complete error message and identify the line, input, and recent change involved. Change one assumption at a time, then rerun the same case. This makes it easier to tell whether a fix addressed the problem or only hid its visible symptom."
+          ],
+          "quiz": {
+            "question": "What is a useful first response to a reproducible program error?",
+            "options": [
+              "Read the error, identify the recent change, and reduce it to a small reproducible case.",
+              "Rewrite the whole program without checking evidence.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Read the error, identify the recent change, and reduce it to a small reproducible case. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Programs, Git, and troubleshooting",
+            "prompt": "A teammate cannot run a project. What should its README provide?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Prerequisites, setup steps, commands, and expected output.",
+              "Only the author’s computer model."
+            ],
+            "answer": 1,
+            "explanation": "Prerequisites, setup steps, commands, and expected output. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "Lecture 1: What is Computation?",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://www.youtube.com/watch?v=ytpJdnlu9ug",
+              "summary": "A visual starting point for breaking problems into program steps."
+            },
+            {
+              "kind": "reading",
+              "title": "Git basics",
+              "provider": "GitHub Docs",
+              "url": "https://docs.github.com/en/get-started/using-git/about-git",
+              "summary": "An introduction to version history and collaboration."
+            },
+            {
+              "kind": "reading",
+              "title": "MIT Introduction to Computer Science and Programming in Python",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+              "summary": "Free beginner lectures, notes, and assignments."
+            }
+          ]
+        },
+        {
+          "title": "Use Git and write a reproducible setup note",
+          "duration": "30 min",
+          "summary": "Use Git and write a reproducible setup note. Learn the key idea, then apply it to a realistic system decision.",
+          "notes": [
+            "Git stores project history as commits, making changes reviewable and recoverable. Branches let people work independently, while merges combine reviewed changes. A commit should describe a coherent change; generated files, personal data, and secrets should stay out of shared history.",
+            "A useful README records prerequisites, setup commands, expected output, and known limitations. Reproducibility means another person can follow the instructions and reach a comparable result. If a step depends on an undocumented local setting, the setup is not yet portable."
+          ],
+          "quiz": {
+            "question": "What is a useful first response to a reproducible program error?",
+            "options": [
+              "Read the error, identify the recent change, and reduce it to a small reproducible case.",
+              "Rewrite the whole program without checking evidence.",
+              "Assume the system behavior without checking it."
+            ],
+            "answer": 0,
+            "explanation": "Read the error, identify the recent change, and reduce it to a small reproducible case. Confirm it with relevant evidence and state any limits."
+          },
+          "practice": {
+            "type": "scenario",
+            "title": "Programs, Git, and troubleshooting",
+            "prompt": "A teammate cannot run a project. What should its README provide?",
+            "options": [
+              "Choose the fastest action without checking impact.",
+              "Prerequisites, setup steps, commands, and expected output.",
+              "Only the author’s computer model."
+            ],
+            "answer": 1,
+            "explanation": "Prerequisites, setup steps, commands, and expected output. This keeps the work scoped and reviewable."
+          },
+          "resources": [
+            {
+              "kind": "video",
+              "title": "Lecture 1: What is Computation?",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://www.youtube.com/watch?v=ytpJdnlu9ug",
+              "summary": "A visual starting point for breaking problems into program steps."
+            },
+            {
+              "kind": "reading",
+              "title": "Git basics",
+              "provider": "GitHub Docs",
+              "url": "https://docs.github.com/en/get-started/using-git/about-git",
+              "summary": "An introduction to version history and collaboration."
+            },
+            {
+              "kind": "reading",
+              "title": "MIT Introduction to Computer Science and Programming in Python",
+              "provider": "MIT OpenCourseWare",
+              "url": "https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/",
+              "summary": "Free beginner lectures, notes, and assignments."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "curationSources": [
+    "https://github.com/ossu/computer-science",
+    "https://github.com/CSwala/awesome-computer-science",
+    "https://github.com/Developer-Y/cs-video-courses"
+  ]
+}

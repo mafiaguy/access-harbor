@@ -1,0 +1,9 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://perceptive-ocelot-901.convex.cloud https://perceptive-ocelot-901.convex.site; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://docs.aws.amazon.com https://sre.google https://static.googleusercontent.com https://nvlpubs.nist.gov https://courses.edx.org https://cheatsheetseries.owasp.org https://cloud.google.com https://csrc.nist.gov https://developer.mozilla.org https://docs.cloud.google.com https://docs.docker.com https://docs.github.com https://github.com https://kubernetes.io https://learn.microsoft.com https://ocw.mit.edu https://owasp.org https://pages.cs.wisc.edu https://pages.nist.gov https://roadmap.sh https://slsa.dev https://training.linuxfoundation.org https://videos.owasp.org https://www.cloudflare.com https://www.nist.gov https://www.usenix.org
+
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex

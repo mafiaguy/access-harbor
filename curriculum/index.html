@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="OpenTech Academy course curricula with carefully selected videos, readings, and publisher-hosted PDFs." />
+    <link rel="canonical" href="https://opencomp.academy/curriculum/" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/brand.css" />
+    <title>Course curricula and resources — OpenTech Academy</title>
+    <style>
+      .resource-page { padding-block: 54px 100px; }
+      .resource-hero { max-width: 820px; padding-block: 50px 42px; }
+      .resource-hero h1 { font-size: clamp(2.8rem, 7vw, 5.8rem); line-height: .98; letter-spacing: -.06em; }
+      .resource-hero h1 span { color: #6c7a71; }
+      .resource-hero p { max-width: 680px; font-size: 1.08rem; line-height: 1.8; }
+      .resource-course { margin-block: 18px; border: 1px solid #dfe4dd; border-radius: 18px; background: #fff; overflow: hidden; }
+      .resource-course > summary { display: grid; grid-template-columns: 54px 1fr auto; align-items: center; gap: 14px; padding: 24px; cursor: pointer; list-style: none; }
+      .resource-course > summary::-webkit-details-marker { display: none; }
+      .resource-course > summary b { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; color: #155f41; background: #e6f1e9; }
+      .resource-course > summary strong { font-size: 1.18rem; }
+      .resource-course > summary small { color: #68746c; }
+      .resource-body { padding: 2px 28px 30px 92px; }
+      .resource-body h3 { margin: 28px 0 10px; }
+      .resource-body ol { padding-left: 20px; line-height: 1.8; }
+      .resource-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+      .resource-link { display: block; padding: 14px 16px; border: 1px solid #e1e6e0; border-radius: 12px; color: inherit; text-decoration: none; }
+      .resource-link:hover { border-color: #46896b; background: #f6faf6; }
+      .resource-link b { display: block; margin-bottom: 5px; }
+      .resource-link span { display: block; color: #67736a; font-size: .9rem; line-height: 1.5; }
+      .rights-note { margin-top: 34px; padding: 18px 20px; border-radius: 12px; background: #f0f4ef; color: #3c4b40; line-height: 1.7; }
+      @media (max-width: 640px) { .resource-body { padding: 0 18px 24px; } .resource-links { grid-template-columns: 1fr; } .resource-course > summary { grid-template-columns: 42px 1fr; padding: 18px; } .resource-course > summary small { grid-column: 2; } }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="OpenTech Academy home"><span class="brand-mark">O<span>.</span></span><span>OpenTech<span class="brand-light"> Academy</span></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a href="/#courses">Courses</a></nav>
+    </header>
+    <main id="main" class="page-wrap resource-page">
+      <div class="resource-hero">
+        <div class="course-kicker">OPEN CONTENT / FIVE LEARNING PATHS</div>
+        <h1>Learn the ideas.<br /><span>Use trusted sources.</span></h1>
+        <p>Each path combines a clear sequence of topics with carefully chosen original readings, lecture videos, guided labs, and publisher-hosted PDFs. Core lessons are taught and assessed inside OpenTech Academy; these links extend the learning with source material. <a href="#awesome-lists">See how GitHub Awesome lists inform course research →</a></p>
+      </div>
+
+      <section class="resource-course" id="awesome-lists" style="padding:24px;margin-bottom:18px">
+        <h2>How we research courses</h2>
+        <p>GitHub Awesome lists help us discover topic areas and learning references. OpenTech writes the lesson sequence, explanations, and practice activities. Each selected reading or video links to its publisher; list inclusion alone does not prove current access or reuse rights.</p>
+        <p>Research map: <a href="https://github.com/0xh4di/awesome-security">security</a> · <a href="https://github.com/ossu/computer-science">computer science</a> · <a href="https://github.com/devtoolsd/awesome-cloud">cloud</a> · <a href="https://github.com/dastergon/awesome-sre">SRE</a> · <a href="https://github.com/wmariuss/awesome-devops">DevOps</a></p>
+      </section>
+
+      <details class="resource-course" id="security-101" open>
+        <summary><b>01</b><strong>Security 101</strong><small>4–6 hours · breadth first · beginner</small></summary>
+        <div class="resource-body">
+          <p><strong>Capstone:</strong> write a risk review for a fictional course service, covering assets, trust boundaries, identity, application risks, detection, and recovery.</p>
+          <ol><li>Security goals, assets, threats, weaknesses, and risk scenarios.</li><li>Processes, least privilege, network requests, DNS, HTTP, and TLS.</li><li>Authentication, authorization, sessions, MFA, secrets, encryption, and backups.</li><li>Application security, dependencies, secure configuration, logging, incident response, and recovery.</li></ol>
+          <h3>Video, reading, and PDF sources</h3>
+          <div class="resource-links">
+            <a class="resource-link" href="https://www.nist.gov/cyberframework"><b>NIST CSF 2.0 · overview, videos, PDF</b><span>Use the six functions to organize an introductory security review.</span></a>
+            <a class="resource-link" href="https://owasp.org/www-project-top-ten/"><b>OWASP Top 10 · web reading</b><span>A shared vocabulary for common web application risk categories.</span></a>
+            <a class="resource-link" href="https://cheatsheetseries.owasp.org/"><b>OWASP Cheat Sheet Series · readings</b><span>Practical secure development guidance, selected by lesson.</span></a>
+            <a class="resource-link" href="https://owasp.org/www-project-web-security-testing-guide/"><b>OWASP WSTG · guide and PDF</b><span>Use selected sections only in a deliberately authorized lab.</span></a>
+            <a class="resource-link" href="https://csrc.nist.gov/pubs/sp/800/61/r3/final"><b>NIST SP 800-61 Rev. 3 · PDF</b><span>Incident response recommendations and their connection to CSF 2.0.</span></a>
+            <a class="resource-link" href="https://videos.owasp.org/"><b>OWASP Video Portal · videos</b><span>Choose an accessible introductory application security talk.</span></a>
+          </div>
+        </div>
+      </details>
+
+      <details class="resource-course" id="computer-systems-foundations">
+        <summary><b>02</b><strong>Computer Systems Foundations</strong><small>18–24 hours · no experience required</small></summary>
+        <div class="resource-body">
+          <p><strong>Capstone:</strong> document a beginner development setup and trace a browser request from DNS lookup to HTTP response.</p>
+          <ol><li>Data representation, CPU, memory, storage, and operating-system purpose.</li><li>Processes, filesystems, users, permissions, and safe troubleshooting.</li><li>Linux shell, paths, files, pipes, processes, and basic scripts.</li><li>IP, ports, DNS, routing, HTTP, TLS, browsers, and servers.</li><li>Programming fundamentals, Git, error messages, and technical documentation.</li><li>Environment configuration, logs, backup, and an integrated system map.</li></ol>
+          <h3>Video, reading, and PDF sources</h3>
+          <div class="resource-links">
+            <a class="resource-link" href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/"><b>MIT OCW 6.0001 · videos, notes, assignments</b><span>Introductory programming course intended for learners with little or no prior experience.</span></a>
+            <a class="resource-link" href="https://ocw.mit.edu/collections/introductory-programming/"><b>MIT OCW introductory programming · course collection</b><span>Use to choose the best lecture sequence for the current cohort.</span></a>
+            <a class="resource-link" href="https://training.linuxfoundation.org/training/introduction-to-linux/"><b>Linux Foundation · Linux course</b><span>Command-line and operating-system basics; verify current audit availability.</span></a>
+            <a class="resource-link" href="https://courses.edx.org/asset-v1%3ALinuxFoundationX%2BLFS101x%2B1T2017%2Btype%40asset%2Bblock/LFS101x_-_Introduction_to_Linux_Outline.pdf"><b>Linux Foundation · course outline PDF</b><span>Publisher-hosted outline; confirm it is the current revision.</span></a>
+            <a class="resource-link" href="https://pages.cs.wisc.edu/~remzi/OSTEP/"><b>OSTEP · free online book and author PDF</b><span>Optional selected chapters on processes, memory, concurrency, and filesystems.</span></a>
+            <a class="resource-link" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview"><b>MDN · HTTP overview</b><span>Browser/server request fundamentals, maintained as web documentation.</span></a>
+            <a class="resource-link" href="https://www.cloudflare.com/learning/dns/what-is-dns/"><b>Cloudflare · DNS learning center</b><span>Introductory DNS reading and explainer video.</span></a>
+            <a class="resource-link" href="https://docs.github.com/en/get-started/using-git/about-git"><b>GitHub Docs · Git basics</b><span>Version control concepts and a beginner-friendly workflow.</span></a>
+          </div>
+        </div>
+      </details>
+
+      <details class="resource-course" id="cloud-engineering">
+        <summary><b>03</b><strong>Cloud Engineering</strong><small>12–16 hours · foundations to guided architecture</small></summary>
+        <div class="resource-body">
+          <p><strong>Capstone:</strong> design a small web service and review its architecture, threats, cost assumptions, and operations.</p>
+          <ol><li>Cloud models, regions, shared responsibility, elasticity, and cost.</li><li>Virtual machines, containers, serverless, scaling, and health checks.</li><li>Virtual networks, subnets, routing, DNS, firewalls, load balancing, and edge delivery.</li><li>Object/block/file storage, data services, durability, backup, and retention.</li><li>Identity, least privilege, secrets, encryption, governance, and budgets.</li><li>Observability, failure scenarios, architecture decisions, and runbook.</li></ol>
+          <h3>Video, reading, and PDF sources</h3>
+          <div class="resource-links">
+            <a class="resource-link" href="https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/"><b>Microsoft Learn · Azure Fundamentals</b><span>Structured beginner paths for cloud concepts, services, governance, and hands-on exercises.</span></a>
+            <a class="resource-link" href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html"><b>AWS Overview · reading and PDF</b><span>Publisher-maintained overview of cloud services and core platform concepts.</span></a>
+            <a class="resource-link" href="https://docs.cloud.google.com/architecture/framework"><b>Google Cloud Well-Architected Framework</b><span>Architecture guidance across security, reliability, performance, cost, and sustainability.</span></a>
+            <a class="resource-link" href="https://cloud.google.com/developers/architecting-with-google-cloud"><b>Google Cloud architecture playlist · videos</b><span>Architecture examples and practitioner case studies.</span></a>
+            <a class="resource-link" href="https://www.cloudflare.com/learning/cloud/what-is-the-cloud/"><b>Cloudflare Learning Center · reading and video</b><span>Provider-neutral introduction to cloud computing and service models.</span></a>
+          </div>
+        </div>
+      </details>
+
+      <details class="resource-course" id="site-reliability-engineering">
+        <summary><b>04</b><strong>Site Reliability Engineering</strong><small>14–18 hours · applied operations</small></summary>
+        <div class="resource-body">
+          <p><strong>Capstone:</strong> define an SLI/SLO, interpret a sample dashboard, and run a tabletop incident review.</p>
+          <ol><li>Service boundaries, user journeys, dependencies, failure modes, toil, and ownership.</li><li>Availability, latency, correctness, indicators, objectives, and error budgets.</li><li>Metrics, logs, traces, symptom-based alerts, dashboards, and debugging.</li><li>Incident roles, mitigation, communication, timelines, and learning reviews.</li><li>Progressive delivery, rollback, overload, redundancy, backup, and capacity.</li><li>Safe automation, runbooks, production readiness, and capstone presentation.</li></ol>
+          <h3>Video, reading, and PDF sources</h3>
+          <div class="resource-links">
+            <a class="resource-link" href="https://sre.google/books/"><b>Google SRE books · complete online books</b><span>Site Reliability Engineering and the hands-on Site Reliability Workbook.</span></a>
+            <a class="resource-link" href="https://sre.google/resources/book-update/"><b>Google SRE chapter resource index</b><span>Updated readings, conference talks, and workshops mapped to book topics.</span></a>
+            <a class="resource-link" href="https://sre.google/resources/videos/"><b>Google SRE video library</b><span>Talks on SLOs, observability, automation, incidents, and operations.</span></a>
+            <a class="resource-link" href="https://sre.google/sre-book/embracing-risk/"><b>Google SRE · Embracing Risk</b><span>Why reliability goals should be balanced against feature delivery and operational cost.</span></a>
+          </div>
+        </div>
+      </details>
+
+      <details class="resource-course" id="devops-deployment">
+        <summary><b>05</b><strong>DevOps &amp; Deployment</strong><small>14–18 hours · hands-on delivery</small></summary>
+        <div class="resource-body">
+          <p><strong>Capstone:</strong> build and test a sample application, package a container, write a deployment plan, and demonstrate rollback.</p>
+          <ol><li>Git branches, review, merge conflicts, tags, and release notes.</li><li>Build/test automation, artifacts, pipeline triggers, and failure diagnosis.</li><li>Least-privilege pipeline tokens, secrets, dependencies, and provenance.</li><li>Container images, Dockerfiles, ports, volumes, configuration, and health checks.</li><li>Environments, rollout strategies, infrastructure as code, and rollback.</li><li>Logs, delivery feedback, deployment safety, and capstone runbook.</li></ol>
+          <h3>Video, reading, and lab sources</h3>
+          <div class="resource-links">
+            <a class="resource-link" href="https://docs.github.com/en/actions/tutorials"><b>GitHub Actions tutorials · guided labs</b><span>Build workflows, CI, publishing, and repository automation.</span></a>
+            <a class="resource-link" href="https://docs.github.com/en/actions/get-started"><b>GitHub Actions quickstart · reading</b><span>Core workflow concepts and the first automated pipeline.</span></a>
+            <a class="resource-link" href="https://docs.docker.com/get-started/"><b>Docker Get Started · reading and hands-on path</b><span>Container packaging, building, running, and sharing images.</span></a>
+            <a class="resource-link" href="https://kubernetes.io/docs/tutorials/kubernetes-basics/"><b>Kubernetes Basics · optional interactive lab</b><span>Deploy, expose, scale, update, and debug a containerized application.</span></a>
+            <a class="resource-link" href="https://sre.google/sre-book/release-engineering/"><b>Google SRE · Release Engineering</b><span>Connect delivery systems and reliable releases.</span></a>
+            <a class="resource-link" href="https://slsa.dev/"><b>SLSA · supply-chain security reading</b><span>Understand source/build integrity and software provenance.</span></a>
+          </div>
+        </div>
+      </details>
+
+      <p class="rights-note"><strong>About third-party material:</strong> OpenTech links to the publisher's videos, books, guides, and PDFs; we do not claim authorship or rehost them. Access terms and licenses can change, so staff must verify links, accessibility, redistribution/embedding permission, and lesson fit before publishing a course version.</p>
+      <p style="margin-top: 26px"><a class="button button-dark" href="/#courses">Back to all courses <span>→</span></a></p>
+    </main>
+    <footer class="site-footer"><a class="brand" href="/"><span class="brand-mark">O<span>.</span></span><span>OpenTech<span class="brand-light"> Academy</span></span></a><p>Understand computers. Build what’s next.</p><div><a href="/#courses">Courses</a></div><small>© 2026 OpenTech Academy</small></footer>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.wrangler/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*
