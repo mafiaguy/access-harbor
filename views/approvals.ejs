@@ -1,0 +1,113 @@
+<%- include('partials/header') %>
+<div class="page-heading">
+<div>
+<div class="eyebrow">ADMINISTRATOR</div>
+<h1>Review requests</h1>
+<p>Check the reason, access level, and duration before you decide.</p>
+</div>
+<a class="secondary button" href="/approvals">↻ Refresh</a>
+</div>
+<% const pending=rows.filter(r=>r.status==='pending'); %>
+<h2 class="section-heading">Waiting for a decision <span class="count">
+<%= pending.length %>
+</span>
+</h2>
+<% if(!pending.length) { %>
+<div class="panel compact-empty">
+<strong>You’re all caught up.</strong>
+<p>New requests will appear here. We’ll email you too.</p>
+</div>
+<% } %>
+<div class="approval-list">
+<% for(const row of pending) { %>
+<article class="panel approval-card">
+<div class="approval-title">
+<div class="resource-link">
+<span class="avatar">
+<%= row.name.slice(0,1) %>
+</span>
+<span>
+<strong>
+<%= row.name %>
+</strong>
+<small>
+<%= row.email %> · #<%= row.id %>
+</small>
+</span>
+</div>
+<span class="badge pending">Awaiting approval</span>
+</div>
+<h3>
+<%= row.resource.name %> <span class="muted">/ <%= row.permissionLabel %>
+</span>
+</h3>
+<p class="reason">
+<%= row.reason %>
+</p>
+<div class="approval-meta">
+<span>
+<strong>
+<%= row.days %> <%= row.days===1?'day':'days' %>
+</strong> after provisioning begins</span>
+<a class="text-link" href="/requests/<%= row.id %>">Full details →</a>
+</div>
+<% if(row.subject===user.sub) { %>
+<div class="note">Another administrator must review your own request.</div>
+<% } else { %>
+<form method="post" action="/approvals/<%= row.id %>/approve">
+<input type="hidden" name="csrf" value="<%= csrf %>">
+<label class="sr-only" for="note-<%= row.id %>">Decision note</label>
+<input id="note-<%= row.id %>" name="note" placeholder="Optional note to the requester" maxlength="2000">
+<div class="review-actions">
+<button class="secondary danger-button" formaction="/approvals/<%= row.id %>/deny">Deny</button>
+<button>Approve access</button>
+</div>
+</form>
+<% } %>
+</article>
+<% } %>
+</div>
+<% const history=rows.filter(r=>r.status!=='pending'); if(history.length) { %>
+<h2 class="section-heading history-heading">Reviewed requests</h2>
+<div class="panel table-wrap">
+<table>
+<thead>
+<tr>
+<th>Requester & resource</th>
+<th>Access</th>
+<th>Status</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<% for(const row of history) { %>
+<tr>
+<td>
+<strong>
+<%= row.name %>
+</strong>
+<small>
+<%= row.resource.name %>
+</small>
+</td>
+<td>
+<%= row.permissionLabel %>
+</td>
+<td>
+<span class="badge <%= row.status %>">
+<%= statusLabel(row.status) %>
+</span>
+<% if(row.error) { %>
+<small class="danger">Needs attention</small>
+<% } %>
+</td>
+<td>
+<a href="/requests/<%= row.id %>" class="text-link">View #<%= row.id %> →</a>
+</td>
+</tr>
+<% } %>
+</tbody>
+</table>
+</div>
+<% } %>
+<%- include('partials/footer') %>

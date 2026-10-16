@@ -1,0 +1,36 @@
+x-app: &app
+  build: .
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    HOST: 0.0.0.0
+    PORT: 3000
+    DATABASE_PATH: /app/data/${APP_ENV:-production}.sqlite
+    CATALOG_PATH: /app/config/catalog.json
+    IDENTITIES_PATH: /app/config/identities.json
+  volumes:
+    - harbor-data:/app/data
+    - ./config:/app/config:ro
+  restart: unless-stopped
+  init: true
+  security_opt:
+    - no-new-privileges:true
+  cap_drop: [ALL]
+  read_only: true
+  tmpfs: [/tmp]
+services:
+  web:
+    <<: *app
+    ports: ["127.0.0.1:3000:3000"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+  worker:
+    <<: *app
+    command: ["node", "src/worker.js"]
+volumes:
+  harbor-data:

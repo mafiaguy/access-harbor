@@ -1,0 +1,67 @@
+<%- include('partials/header',{narrow:true}) %>
+<div class="page-heading">
+<div>
+<div class="eyebrow">ADMINISTRATOR</div>
+<h1>Environment setup</h1>
+<p>A simple checklist for getting your workspace ready.</p>
+</div>
+</div>
+<section aria-labelledby="required-settings">
+<h2 id="required-settings">What you need to connect your tools</h2>
+<p class="helper">Configure these on the server with <code>npm run setup</code>. Secrets are loaded from AWS Secrets Manager (Floci locally). Credential values are never displayed here. “Configured” means present, not that a real grant has been tested.</p>
+<% for(const group of requirements) { %>
+<article class="panel requirement-group">
+<h3><%= group.name %></h3>
+<% for(const field of group.fields) { %>
+<div class="requirement-field">
+<div><strong><%= field.name %></strong><p><%= field.help %></p><code><%= field.location %></code></div>
+<span class="badge <%= field.configured?'active':'pending' %>"><%= field.status %></span>
+</div>
+<% } %>
+</article>
+<% } %>
+<div class="note"><strong>Ready to configure?</strong> Run <code>npm run setup</code>, follow the prompts. Then run <code>npm run doctor -- --online</code>. Never paste private keys into access requests or send them to users.</div>
+</section>
+<h2 class="section-heading history-heading">Runtime checks</h2>
+<div class="panel checklist">
+<% for(const check of checks) { %>
+<div>
+<span class="check-icon <%= check.ok?'ok':'attention' %>">
+<%= check.ok?'✓':'!' %>
+</span>
+<div>
+<h3>
+<%= check.name %>
+</h3>
+<p>
+<%= check.description %>
+</p>
+</div>
+</div>
+<% } %>
+</div>
+<h2 class="section-heading history-heading">Delivery & provider issues</h2>
+<p class="helper">
+<%= pendingMail %> email(s) waiting to send · <%= failedMail %> failed delivery attempt(s).
+</p>
+<% if(!issues.length && !failedMail) { %>
+<div class="panel compact-empty">
+<strong>No recorded failures.</strong>
+<p>Live provider connectivity must still be tested with a dedicated resource.</p>
+</div>
+<% } %>
+<% for(const issue of issues) { %>
+<div class="alert warning">
+<a href="/requests/<%= issue.id %>">
+<strong>Request #<%= issue.id %>
+</strong>
+</a> · <%= issue.error %>
+</div>
+<% } %>
+<details class="panel operator-details">
+<summary>How do I add resources or users?</summary>
+<p>Update <code>config/catalog.json</code> to add repositories, accounts, and allowed permissions. Update <code>config/identities.json</code> to enroll users using their OIDC subject. Restart the web and worker services after changes.</p>
+<p>Requests keep a snapshot of their resource and identity mapping so existing grants can still expire. Keep the Secrets Manager bundle, GitHub App and AWS workload permissions until those grants are removed.</p>
+<a class="text-link" href="/guide#operators">Environment setup walkthrough →</a>
+</details>
+<%- include('partials/footer') %>

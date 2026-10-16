@@ -1,0 +1,20 @@
+# Optional public HTTPS edge. Set ACCESS_DOMAIN in .env and point DNS to the host.
+# docker compose -f compose.yaml -f compose.https.yaml up --build -d
+services:
+  proxy:
+    image: caddy:2-alpine
+    environment:
+      ACCESS_DOMAIN: ${ACCESS_DOMAIN:?Set ACCESS_DOMAIN to your public hostname}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    restart: unless-stopped
+    depends_on:
+      - web
+volumes:
+  caddy-data:
+  caddy-config:

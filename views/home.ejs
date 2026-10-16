@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+<section class="page-heading">
+<div>
+<div class="eyebrow">YOUR WORKSPACE</div>
+<h1>My access</h1>
+<p>Everything you’ve requested, in one place.</p>
+</div>
+<a class="button" href="/request">＋ Request access</a>
+</section>
+<% if(!rows.length) { %>
+<div class="empty panel">
+<div class="empty-icon">↗</div>
+<h2>Need access to get something done?</h2>
+<p>Request a GitHub repository or AWS account.<br>An administrator reviews it, and access expires automatically.</p>
+<a class="button" href="/request">Make your first request →</a>
+<a class="text-link" href="/guide">How does this work?</a>
+</div>
+<% } else { %>
+<div class="panel table-wrap">
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Access</th>
+<th>Status</th>
+<th>Until</th>
+<th>
+<span class="sr-only">Details</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<% for(const row of rows) { %>
+<tr>
+<td>
+<a class="resource-link" href="/requests/<%= row.id %>">
+<span class="tool-icon <%= row.resource.provider %>">
+<%= row.resource.provider==='github' ? 'GH' : 'aws' %>
+</span>
+<span>
+<strong>
+<%= row.resource.name %>
+</strong>
+<small>
+<%= row.resource.provider==='github' ? 'GitHub' : 'AWS' %> · Request #<%= row.id %>
+</small>
+</span>
+</a>
+</td>
+<td>
+<%= row.permissionLabel %>
+</td>
+<td>
+<span class="badge <%= row.status %>">
+<%= statusLabel(row.status) %>
+</span>
+<% if(row.error) { %>
+<small class="danger">Needs attention</small>
+<% } %>
+</td>
+<td>
+<%= row.expires_at ? date(row.expires_at) : `${row.days} day${row.days===1?'':'s'} after approval` %>
+</td>
+<td>
+<a class="text-link" href="/requests/<%= row.id %>">View →</a>
+</td>
+</tr>
+<% } %>
+</tbody>
+</table>
+</div>
+<p class="helper">The duration starts when the worker begins provisioning. <a href="/guide">Learn about expiry →</a>
+</p>
+<% } %>
+<%- include('partials/footer') %>

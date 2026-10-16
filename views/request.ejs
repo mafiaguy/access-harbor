@@ -1,0 +1,117 @@
+<%- include('partials/header',{narrow:true}) %>
+<a href="/" class="back-link">← My access</a>
+<div class="page-heading">
+<div>
+<h1>Request access</h1>
+<p>A little context. A clear end date. You’re on your way.</p>
+</div>
+</div>
+<ol class="stepper" aria-label="Request progress">
+<li class="current" data-progress="0">
+<span>1</span>Choose a tool</li>
+<li data-progress="1">
+<span>2</span>Access details</li>
+<li data-progress="2">
+<span>3</span>Review & send</li>
+</ol>
+<form method="post" action="/requests" id="request-form" class="panel wizard">
+<input type="hidden" name="csrf" value="<%= csrf %>">
+<section class="wizard-step active" data-step="0">
+<h2>Where do you need access?</h2>
+<p>Choose a tool to see what’s available.</p>
+<div class="provider-options">
+<% for(const [key,name,description] of [['github','GitHub','Repositories and collaboration'],['aws','Amazon Web Services','Accounts and permission sets']]) { if(!resources.some(r=>r.provider===key)) continue; %>
+<label class="provider-option">
+<input type="radio" name="provider" value="<%= key %>" <%= resources[0].provider===key?'checked':'' %>>
+<span class="tool-icon <%= key %>">
+<%= key==='github'?'GH':'aws' %>
+</span>
+<span>
+<strong>
+<%= name %>
+</strong>
+<small>
+<%= description %>
+</small>
+</span>
+</label>
+<% } %>
+</div>
+<div class="wizard-actions">
+<span class="helper">No tokens or keys are issued to you.</span>
+<button type="button" data-next>Continue →</button>
+</div>
+</section>
+<section class="wizard-step" data-step="1">
+<h2>What access do you need?</h2>
+<p>Your administrator controls the resources and permissions shown here.</p>
+<label for="resource">Resource</label>
+<select name="resource" id="resource" required>
+<% for(const resource of resources) { %>
+<option value="<%= resource.id %>">
+<%= resource.name %>
+</option>
+<% } %>
+</select>
+<div class="field-grid">
+<div>
+<label for="permission">Access level</label>
+<select name="permission" id="permission" required>
+<% const permissions=new Map(resources.flatMap(r=>Object.entries(r.permissions))); for(const [value,label] of permissions) { %>
+<option value="<%= value %>">
+<%= label %>
+</option>
+<% } %>
+</select>
+</div>
+<div>
+<label for="days">How many days?</label>
+<input type="number" id="days" name="days" min="1" max="30" step="1" value="1" required aria-describedby="duration-help">
+<small id="duration-help">Minimum 1 day. Maximum 30 days.</small>
+</div>
+</div>
+<label for="reason">Why do you need access?</label>
+<textarea name="reason" id="reason" minlength="10" maxlength="2000" required placeholder="For example: Review the deployment code for incident ENG-204.">
+</textarea>
+<small>Help your administrator understand the task.</small>
+<div class="wizard-actions">
+<button type="button" class="secondary" data-back>← Back</button>
+<button type="button" data-next>Review request →</button>
+</div>
+</section>
+<section class="wizard-step" data-step="2">
+<h2>Ready to send?</h2>
+<p>Every administrator will be notified. One administrator can approve or deny.</p>
+<dl class="summary">
+<div>
+<dt>Resource</dt>
+<dd data-summary="resource">—</dd>
+</div>
+<div>
+<dt>Access level</dt>
+<dd data-summary="permission">—</dd>
+</div>
+<div>
+<dt>Duration</dt>
+<dd data-summary="duration">—</dd>
+</div>
+<div>
+<dt>Reason</dt>
+<dd data-summary="reason">—</dd>
+</div>
+</dl>
+<div class="note">The clock starts when provisioning begins after approval. Access is removed automatically when it expires.</div>
+<div class="wizard-actions">
+<button type="button" class="secondary" data-back>← Edit details</button>
+<button type="submit">Send request →</button>
+</div>
+</section>
+<noscript>
+<p class="note">JavaScript is disabled. Complete all fields above and submit your request below.</p>
+<button type="submit">Send request</button>
+</noscript>
+</form>
+<script type="application/json" id="catalog-data">
+<%- JSON.stringify(resources.map(({id,provider,name,permissions})=>({id,provider,name,permissions}))).replaceAll('<','\\u003c') %>
+</script>
+<%- include('partials/footer') %>

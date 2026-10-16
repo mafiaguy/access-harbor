@@ -1,0 +1,6 @@
+# Local development only: Floci's console starts a sidecar through Docker.
+# This socket grants Floci control of the local Docker engine.
+services:
+  floci:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

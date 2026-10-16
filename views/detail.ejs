@@ -1,0 +1,86 @@
+<%- include('partials/header',{narrow:true}) %>
+<a class="back-link" href="<%= admin && row.subject!==user.sub ? '/approvals' : '/' %>">← Back to requests</a>
+<div class="page-heading">
+<div>
+<div class="eyebrow">REQUEST #<%= row.id %>
+</div>
+<h1>
+<%= row.resource.name %>
+</h1>
+<p>
+<%= row.name %> · <%= row.permissionLabel %> · <%= row.days %> <%= row.days===1?'day':'days' %>
+</p>
+</div>
+<span class="badge <%= row.status %>">
+<%= statusLabel(row.status) %>
+</span>
+</div>
+<div class="panel detail-panel">
+<h2>
+<%= statusLabel(row.status) %>
+</h2>
+<p>
+<%= ({pending:'Your request is with the administrators. We’ll email you when they decide.',provisioning:'Approved. The worker is setting up your access.',active:'Your access is ready. It will be removed when the duration ends.',revoking:'The worker is removing this grant. Access may still be available until the provider confirms.',expired:'The provider confirmed that this temporary grant was removed.',revoked:'This temporary grant was removed before its scheduled expiry.',denied:'An administrator denied this request. You can submit a new request with more context.',cancelled:'You cancelled this request before it was approved.',failed:'Existing access was detected. Access Harbor has left it untouched.'})[row.status] %>
+</p>
+<% if(row.error) { %>
+<div class="alert warning" role="status">
+<%= row.error %>
+</div>
+<% } %>
+<% if(row.status==='active' && row.resource.provider==='github') { %>
+<div class="note">You may need to accept GitHub’s repository invitation. Use your own GitHub account; Access Harbor never gives you a token or SSH key.</div>
+<% } %>
+<% if(row.status==='active' && (row.resource.provider==='github' || row.resource.portalUrl)) { %>
+<a class="button" href="<%= row.resource.provider==='github' ? 'https://github.com/'+row.resource.repository : row.resource.portalUrl %>" target="_blank" rel="noopener noreferrer">Open <%= row.resource.provider==='github'?'GitHub':'AWS access portal' %> ↗</a>
+<% } %>
+<dl class="summary">
+<div>
+<dt>Requested by</dt>
+<dd><%= row.email %></dd>
+</div>
+<div>
+<dt>Expires</dt>
+<dd><%= date(row.expires_at) %></dd>
+</div>
+<div>
+<dt>Reason</dt>
+<dd><%= row.reason %></dd>
+</div>
+<% if(row.reviewer) { %>
+<div>
+<dt>Reviewed by</dt>
+<dd><%= row.reviewer %></dd>
+</div>
+<% } %>
+<% if(row.decision_note) { %>
+<div>
+<dt>Reviewer’s note</dt>
+<dd><%= row.decision_note %></dd>
+</div>
+<% } %>
+</dl>
+<% if(['pending','active'].includes(row.status)) { %>
+<form action="/requests/<%= row.id %>/stop" method="post" data-confirm="<%= row.status==='pending' ? 'Cancel this request?' : 'Remove this access before its expiry?' %>">
+<input type="hidden" name="csrf" value="<%= csrf %>">
+<button class="secondary danger-button">
+<%= row.status==='pending'?'Cancel request':'Remove access early' %>
+</button>
+</form>
+<% } %>
+</div>
+<h2 class="section-heading history-heading">Request history</h2>
+<ol class="timeline">
+<% for(const event of events) { %>
+<li>
+<strong>
+<%= event.event %>
+</strong>
+<small>
+<%= event.actor==='system'?'Access Harbor':event.actor %> · <%= date(event.created_at) %>
+</small>
+</li>
+<% } %>
+</ol>
+<p class="helper">Provider operations may take time. <a href="/requests/<%= row.id %>">Refresh status →</a>
+</p>
+<%- include('partials/footer') %>

@@ -1,0 +1,4 @@
+[
+  {"id":"github-platform","provider":"github","name":"your-org / platform","description":"Platform repository","repository":"your-org/platform","installation_id":12345,"permissions":{"pull":"Read","push":"Write","maintain":"Maintain"}},
+  {"id":"aws-sandbox","provider":"aws","name":"Engineering sandbox","description":"Development account","account_id":"123456789012","permissions":{"readonly":"Read only","developer":"Developer"},"permission_sets":{"readonly":"arn:aws:sso:::permissionSet/ssoins-REPLACE/ps-REPLACE","developer":"arn:aws:sso:::permissionSet/ssoins-REPLACE/ps-REPLACE"}}
+]

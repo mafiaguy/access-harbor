@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Setup required · Access Harbor</title><link rel="stylesheet" href="/assets/styles.css"></head>
+<body><header class="topbar"><span class="brand"><img src="/assets/mark.svg" width="30" height="30" alt="">Access Harbor</span></header>
+<main class="shell narrow"><div class="page-heading"><div><div class="eyebrow">ENVIRONMENT SETUP</div><h1>Connect your environment</h1><p>The application is waiting for its configuration and Secrets Manager connection.</p></div></div>
+<section class="panel detail-panel"><h2>Start the local infrastructure</h2><p>Local development uses Floci for AWS Secrets Manager, Cognito sign-in, Identity Center assignments, and SES email. There are no built-in user accounts or simulated approval results.</p><pre><code>docker compose -f compose.floci.yaml up -d
+npm run setup
+npm start
+npm run worker</code></pre><p>Choose <strong>local</strong> during setup and create your own administrator and requester accounts. For production, choose <strong>production</strong> and configure your actual organization integrations.</p><div class="note">Secrets are read from Secrets Manager. GitHub requires a real GitHub App. If configuration is already in place, run <code>npm run doctor</code> to diagnose availability and permission errors.</div></section>
+<p class="helper">Access requests stay unavailable until setup succeeds. This page refreshes when you reload; the server retries configuration automatically.</p></main></body></html>

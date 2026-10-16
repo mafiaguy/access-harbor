@@ -1,53 +1,63 @@
-# OpenTech Academy
+# Access Harbor
 
-OpenTech Academy makes practical computer education clear and connected. Courses cover systems foundations, security, cloud engineering, site reliability, and software deployment.
+**Ask for access. Get approval. Let it expire.**
 
-## Run locally
+Open-source Node.js temporary-access management for GitHub and AWS IAM Identity Center. One application, with the same approval and provider code locally and in production. No built-in users, fake login, or automatic-success provider.
 
-Install the pinned dependencies, then run the Vite development server:
+## Local development with Floci
 
-```sh
-pnpm install
-pnpm dev
-```
-
-Open <http://127.0.0.1:8000>. The sign-in screen is wired to Better Auth and the configured Convex deployment. Before it can accept accounts, configure the deployment environment listed below. The learning pages still store lesson progress in the current browser; synced enrollment, payment, and certificate issuance are not connected.
-
-## Structure
-
-- `index.html`, `styles.css`, `brand.css`, `app.js`, `catalog.js` — public company homepage, responsive design, and course search.
-- `courses/<slug>/index.html` — public, crawlable course detail pages.
-- `courses/<slug>/course.json` — course-specific lessons, written explanations, checks, guided activities, curated publisher resources, and Awesome-list discovery sources.
-- `lms/<slug>/` — shared lesson-by-lesson learner view with local preview progress and course completion state.
-- `convex/`, `auth-client.js`, `lms/start.html` — Better Auth email/password sign-in backed by the Convex Better Auth component.
-- `courses/COURSE_TEMPLATE.md` — guidance for adding courses with consistent page structure.
-- `robots.txt`, `sitemap.xml`, `favicon.svg` — public indexing and site identity.
-- `docs/repo-access-automation.md`, `.github/workflows/`, `scripts/`, `grants.json` — repository access automation preserved from the original repository.
-
-## Course and certificate model
-
-Course learning is designed around curated, attributed resources and practical work. Learning access is intended to be free. A course completion certificate is optional, offered after course requirements are met, and requires a separate fee. The certificate price, actual authentication and enrollment, payment processor, content hosting, and verification service need to be configured before launch.
-
-The five learning spaces cover Security 101, Computer Systems Foundations, Cloud Engineering, Site Reliability Engineering, and DevOps & Deployment. Each has original notes, checks, activities, and optional links to publisher videos/readings. A completed preview shows the planned certificate step, but cannot start checkout or issue an award. See the researched source map in [curriculum/awesome-list-map.md](curriculum/awesome-list-map.md).
-
-## Curriculum contributions
-
-See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [courses/COURSE_TEMPLATE.md](courses/COURSE_TEMPLATE.md). Link to third-party resources rather than rehosting them, and confirm attribution, access, licensing, and embedding terms.
-
-## Hosting
-
-The site is configured for Cloudflare Workers Static Assets in `wrangler.jsonc`. Build the static site and bundled auth client before previewing or deploying:
+Requires Node.js 24+ and Docker.
 
 ```sh
-pnpm build
-pnpm exec wrangler dev
-pnpm exec wrangler deploy
+npm ci
+docker compose -f compose.floci.yaml up -d
+npm run setup
 ```
 
-Set the Convex deployment's `SITE_URL`, `CONVEX_SITE_URL`, and generated `BETTER_AUTH_SECRET` before enabling sign-in. Add the matching public Vite variables to the deployment build environment. The current canonical URLs still use `https://opencomp.academy/`; update page metadata, structured data, `robots.txt`, and `sitemap.xml` together after the production domain is confirmed. See [docs/production-readiness.md](docs/production-readiness.md) for remaining launch gates. Analytics, R2, payments, synced progress, and certificate services are not connected.
+Choose **local**. Setup creates your own administrator and requester in Floci Cognito, maps them to local Identity Center users, configures a permission set and stores server secrets in Floci Secrets Manager. It does not populate requests or auto-approve access.
 
-The syllabus and source-linked videos, PDFs, and readings for the five current courses live in [curriculum/research-and-resources.md](curriculum/research-and-resources.md). The GitHub discovery lists and upcoming topic roadmap are in [curriculum/awesome-list-map.md](curriculum/awesome-list-map.md). The material is curated and attributed; third-party content remains hosted by its publisher unless redistribution permission is documented.
+```sh
+npm start
+# Second terminal:
+npm run worker
+```
 
-## License
+Open **http://localhost:3000**. Sign in using the accounts you created. Request 1–30 days of AWS access; a different administrator reviews it. Floci SES captures the notifications. GitHub requires a real GitHub App and is not emulated by Floci.
 
-Choose and add a project license before accepting broad external contributions. Educational content and application code should have explicit, compatible licensing.
+For containerized local application services, after setup:
+
+```sh
+docker compose -f compose.yaml -f compose.local.yaml up --build -d
+```
+
+## Secrets
+
+All application credentials are read from **AWS Secrets Manager** at startup. Locally the SDK targets Floci’s Secrets Manager endpoint. Production uses a workload IAM role and the normal AWS endpoint.
+
+The secret bundle contains `SESSION_SECRET`, `OIDC_CLIENT_SECRET`, optional `GITHUB_APP_PRIVATE_KEY`, and optional `SMTP_USER` / `SMTP_PASSWORD`. `.env` contains only secret IDs and non-secret metadata. Plaintext credential environment variables and mounted GitHub keys are rejected. The GitHub key stays in process memory.
+
+Unavailable or invalid configuration blocks access. The web process shows a setup-required page; the worker refuses to start. There is no fallback login or provider.
+
+## Production
+
+Run `npm run setup` and choose **production**. Supply your actual OIDC configuration, enrolled identities, GitHub/AWS resource catalog and email service. Setup writes secrets directly to Secrets Manager. Give the runtime role `secretsmanager:GetSecretValue` on that bundle, optional `kms:Decrypt` for its customer-managed key, and the required Identity Center / SES permissions.
+
+[Environment walkthrough](docs/SETUP.md) · [Architecture](docs/ARCHITECTURE.md) · [Troubleshooting](docs/TROUBLESHOOTING.md)
+
+## Tests and contributions
+
+```sh
+npm run check
+npm run format:check
+npm test
+# Explicitly target the running local emulator for real SDK/OIDC integration tests:
+FLOCI_TEST_ENDPOINT=http://localhost:4566 npm test
+```
+
+Unit tests use fixtures only inside `tests/`. The opt-in Floci test exercises Secrets Manager, signed OIDC sign-in with PKCE, real Identity Center assignment/removal API calls and SES delivery. It creates and cleans up isolated integration resources inside the local emulator. Use a disposable Floci volume for integration testing.
+
+[Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Roadmap](ROADMAP.md) · [MIT license](LICENSE)
+
+Early release: expiry remains best-effort and removing an AWS assignment does not invalidate all existing role sessions. Existing access is preserved rather than temporarily elevated and restored. Use a single host with a durable SQLite volume. Databases from the previous prototype are left untouched and are not migrated automatically.
+
+To check the actual non-root web/worker containers against the same Floci instance, first build `docker build -t access-harbor:local .`, then set `CONTAINER_TEST_IMAGE=access-harbor:local` and `FLOCI_TEST_ENDPOINT=http://localhost:4566` when running tests. `DOCKER_BIN` and `FLOCI_DOCKER_NETWORK` can override the CLI path and local network.

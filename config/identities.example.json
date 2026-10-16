@@ -1,0 +1,14 @@
+{
+  "oidc-subject-for-alex": {
+    "email": "alex@example.com",
+    "name": "Alex Rivera",
+    "github_username": "alex-github",
+    "aws_user_id": "identity-center-user-id"
+  },
+  "oidc-subject-for-morgan": {
+    "email": "morgan@example.com",
+    "name": "Morgan Chen",
+    "github_username": "morgan-github",
+    "aws_user_id": "identity-center-user-id"
+  }
+}

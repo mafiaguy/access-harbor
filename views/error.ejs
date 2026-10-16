@@ -1,0 +1,9 @@
+<%- include('partials/header',{narrow:true}) %>
+<div class="panel empty">
+<h1>Let’s fix that.</h1>
+<p role="alert">
+<%= message %>
+</p>
+<a href="<%= user?'/':'/login' %>" class="button">Back to <%= user?'my access':'sign-in' %> →</a>
+</div>
+<%- include('partials/footer') %>

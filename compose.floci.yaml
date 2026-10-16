@@ -1,0 +1,14 @@
+services:
+  floci:
+    image: ${FLOCI_IMAGE:-floci/floci@sha256:e0b292df4dc9559b7b1bf4f51bdda4bb8e269276236438cd03cae661260ea8a9}
+    ports:
+      - "127.0.0.1:4566:4566"
+    environment:
+      FLOCI_BASE_URL: http://localhost:4566
+      FLOCI_STORAGE_MODE: persistent
+      FLOCI_STORAGE_PERSISTENT_PATH: /app/data
+    volumes:
+      - floci-data:/app/data
+    restart: unless-stopped
+volumes:
+  floci-data:
