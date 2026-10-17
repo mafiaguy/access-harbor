@@ -103,6 +103,7 @@ export function createApp(config, db) {
     }
     next();
   });
+  app.get('/integration-guide', (_req, res) => res.render('integration-guide'));
   configureAuth(app, config);
   app.get('/guide', (_req, res) => res.render('guide', { title: 'How it works' }));
   app.use((req, res, next) => (req.session.user ? next() : res.redirect('/login')));

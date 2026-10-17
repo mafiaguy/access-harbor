@@ -26,6 +26,7 @@ startup.set('view engine', 'ejs');
 startup.set('views', path.join(root, 'views'));
 startup.get('/health/live', (_req, res) => res.json({ status: 'ok' }));
 startup.get('/health/ready', (_req, res) => res.status(503).json({ status: 'setup-required' }));
+startup.get('/integration-guide', (_req, res) => res.render('integration-guide'));
 startup.use((_req, res) => res.status(503).render('startup'));
 let handler = startup,
   db,
